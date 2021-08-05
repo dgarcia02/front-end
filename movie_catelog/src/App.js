@@ -1,6 +1,7 @@
 import './App.css';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import Component from './components/Component'
 
 const App = () => {
     const [newTitle, setNewTitle] = useState('')
@@ -72,6 +73,7 @@ const App = () => {
                         newMovies.map((movie) => {
                             return (
                                 <>
+                                <Component show={movie} />
                                 </>
                             )
                         })
