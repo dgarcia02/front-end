@@ -105,6 +105,7 @@ const App = () => {
                         newMovies.map((movie) => {
                             return (
                                 <>
+
                                     <Component show={movie} />
                                     <form onSubmit={handleEditMovie}>
                                         Title: <input type='text' onChange={handleNewTitle} /><br/>
@@ -116,6 +117,7 @@ const App = () => {
                                     </form>
                                     <button onClick={ (event) => {
                                         handleDelete(movie) } }>Delete</button>
+
                                 </>
                             )
                         })
