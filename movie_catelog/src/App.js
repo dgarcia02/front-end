@@ -1,6 +1,7 @@
 import './App.css';
 import {useState, useEffect} from 'react'
 import axios from 'axios'
+import Component from './components/Component'
 
 const App = () => {
     const [newTitle, setNewTitle] = useState('')
@@ -52,6 +53,38 @@ const App = () => {
         )
     }
 
+    const handleDelete = (movieData) => {
+        axios
+            .delete(`http://localhost:3000/movies/${movieData._id}`)
+            .then(() => {
+                axios
+                    .get("http://localhost:3000/movies")
+                    .then((response) => {
+                        setNewMovies(response.data)
+                })
+            })
+    }
+
+    const handleEditMovie = (movieData) => {
+        axios
+            .put(`http://localhost:3000/movies/${movieData._id}`,
+                {
+                    title: newTitle,
+                    genre: newGenre,
+                    image: newImage,
+                    rating: newRating,
+                    cast: newCast
+                }
+            )
+            .then(() => {
+                axios
+                    .get("http://localhost:3000/movies")
+                    .then((response) => {
+                        setNewMovies(response.data)
+            })
+    }
+
+
     return (
         <main>
             <h1>Movies</h1>
@@ -72,6 +105,19 @@ const App = () => {
                         newMovies.map((movie) => {
                             return (
                                 <>
+
+                                    <Component show={movie} />
+                                    <form onSubmit={handleEditMovie}>
+                                        Title: <input type='text' onChange={handleNewTitle} /><br/>
+                                        Genre: <input type='text' onChange={handleNewGenre} /><br/>
+                                        Image: <input type='url' onChange={handleNewImage} /><br/>
+                                        Rating: <input type='number' onChange={handleNewRating} /><br/>
+                                        Cast: <input type='text' onChange={handleNewCast} /><br/>
+                                        <input type='submit' value='Edit Movie' />
+                                    </form>
+                                    <button onClick={ (event) => {
+                                        handleDelete(movie) } }>Delete</button>
+
                                 </>
                             )
                         })
